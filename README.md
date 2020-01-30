@@ -23,22 +23,23 @@ This pipeline uses a stack of already trained UNet models [2] to predict tissue 
 - Tested on Python 3.7.3
 
 ## Necessary Packages
-- keras
-- tensorflow
+Tested using the following package versions:
+- keras v. 2.2.4
+- tensorflow v. 1.13.1
 - staintools v. 2.1.2
-- numpy
-- PIL
-- OpenCV
-- skimage
-- tifffile
+- numpy v. 1.16.4
+- Pillow v. 5.4.1
+- OpenCV v. 4.1.0
+- scikit-image v. 0.15.0
+- tifffile v. 2019.7.26
 
 ## Using the Pipeline
-- Copy H&E Images of mouse pancereas with developing cancer into the "Inputs" folder.
+- Copy H&E Images of mouse pancereas with developing cancer into the "Inputs" folder
 - From the command line, run the python script
 ```bash
 python ProcessImages.py
 ```
-- Predicted tissue masks and combined image be saved into the "Outputs" Folder
+- Predicted tissue masks and combined image will be saved into the "Outputs" folder
 
 ## Acknowledgements
 1: Mills, J. C., & Sansom, O. J. (2015). Reserve stem cells: Differentiated cells reprogram to fuel repair, metaplasia, and neoplasia in the adult gastrointestinal tract. Science Signaling, 8(385). doi: 10.1126/scisignal.aaa7540
