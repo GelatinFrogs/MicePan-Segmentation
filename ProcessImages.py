@@ -1,11 +1,11 @@
 #Import Packages and Functions
-print('\033[1mImporting Packages\033[0m')
+print('\033[1mImporting More Packages Than Necessary\033[0m')
 import os
 import sys
 import numpy as np
-from tifffile import imread, imsave
-from skimage.io import imread, imsave
+from skimage.io import imread
 from skimage.transform import resize
+from tifffile import imsave
 from keras.models import Model, load_model
 from keras.layers import Input
 from keras.layers.core import Lambda
@@ -42,11 +42,8 @@ def dice_coef(y_true, y_pred):
 #Editable Parameters
 SliceLength=5000
 
-file_location='./PancreatitisInputs/*days.tif'
-save_location='./PancreatitisOutputs/'
-
-#file_location='./GithubTestInputsFolder/*'
-#save_location='./GithubTestOutputsFolder/'
+file_location='./GithubTestInputsFolder/*.tif'
+save_location='./GithubTestOutputsFolder/'
 NeoplasiaThreshold=.7  #Threshold optimized on prior data
 MetaplasiaThreshold=.5 #Threshold optimized on prior data
 NormalThreshold=.3     #Threshold optimized on prior data
@@ -151,7 +148,7 @@ class ReinhardColorNormalizer(object):
 
 #Collecting Files to run
 print('\033[1mCollecting Files To Analyze\033[0m')
-test_ids=sorted(glob.glob(file_location))[1:]         ###Remove vectore indexing
+test_ids=sorted(glob.glob(file_location))
 print('\033[1mCollected '+str(len(test_ids))+' file(s)\033[0m')
 #End File Collection
 
