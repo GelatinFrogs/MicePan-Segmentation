@@ -28,7 +28,7 @@ This pipeline uses a stack of already trained UNet models [1] to predict tissue 
 - skimage
 - tiffile
 
-## Deploying the Pipeline
+## Using the Pipeline
 - Copy H&E Images of mouse pancereas with developing cancer into the "Inputs" folder.
 - From the command line, run the python script
 ```bash
