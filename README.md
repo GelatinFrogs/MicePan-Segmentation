@@ -3,7 +3,8 @@ This is an image analysis pipeline that takes input H&E images of a mouse pancre
 
 <p align='center'>
   <img src='assets/ADMProgression.jpg' width='450'/>
-</p> (Mills & Sansom, 2015)
+  (Mills & Sansom, 2015)
+</p> 
 
 <p align='center'>
   <img src='assets/StainComparison.png' width='290'/>
