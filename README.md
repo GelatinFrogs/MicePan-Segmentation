@@ -1,7 +1,7 @@
 # Segmentation of Developing Cancer Morphologies in Mouse Pancreas
 This is an image analysis pipeline that takes input H&E images of a mouse pancreas and determines the location and abundance of tissue types common in developing pancreatic cancer. The predicted tissues can both replicate immunostaining techniques, and can even discern morphologies that are inseperable with current stains.
 
-<p align='center', style=font-size:5pt>
+<p align='center', style='font-size:5pt'>
   <img src='assets/ADMProgression.jpg' width='450'/>
 (Mills & Sansom, 2015)
 </p> 
