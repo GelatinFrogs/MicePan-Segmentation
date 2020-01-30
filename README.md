@@ -7,7 +7,7 @@ This is an image analysis pipeline that takes input H&E images of a mouse pancre
 </p> 
 
 <p align='center'>
-  <img src='assets/ExamplePredictions.png' width='420'/>
+  <img src='assets/ExamplePredictions.png' width='700'/>
 </p>
 
 ## Method
