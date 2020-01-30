@@ -10,7 +10,7 @@ This is an image analysis pipeline that takes input H&E images of a mouse pancre
 This pipeline uses a stack of already trained UNet models [1] to predict tissue type based on morphology. Prior to UNet analysis, the H&E Images are locally normalized at intermediate crops using the Reinhard method [2]. Predictions for neoplasias, metaplasias, normal acinars, and stromal tissues are then combined to produce comprehensive results for an entire tissue.
 
 <p align='center'>
-  <img src='assets/MethodologyWorkFlow.png' width='290'/>
+  <img src='assets/MethodologyWorkFlow.png' width='400'/>
 </p>
 
 ## Prerequisites
