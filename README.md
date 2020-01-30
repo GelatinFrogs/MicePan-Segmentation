@@ -25,7 +25,7 @@ Insert Diagram Here
 
 ## Deploying the Pipeline
 - Copy H&E Images of mouse pancereas with developing cancer into the "Inputs" folder.
-- Run the Pipeline
+- From the command line, run the python script
 ```bash
 python ProcessImages.py
 ```
@@ -33,6 +33,7 @@ python ProcessImages.py
 
 ## Acknowledgements
 1: Ronneberger, O., Fischer, P., & Brox, T. (2015). U-Net: Convolutional Networks for Biomedical Image Segmentation. ArXiv, abs/1505.04597. 
+
 2: Reinhard, E., Ashikhmin, M., Gooch, B., & Shirley, P. (2001). Color Transfer between Images. IEEE Computer Graphics and Applications, 21, 34-41
 
 
