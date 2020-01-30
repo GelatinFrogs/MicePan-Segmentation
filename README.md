@@ -34,12 +34,12 @@ Tested using the following package versions:
 - tifffile v. 2019.7.26
 
 ## Using the Pipeline
-- Copy H&E Images of mouse pancereas with developing cancer into the "Inputs" folder
+- Copy H&E images of mouse pancereas with developing cancer into the "Inputs" folder (.tif format)
 - From the command line, run the python script
 ```bash
 python ProcessImages.py
 ```
-- Predicted tissue masks and combined image will be saved into the "Outputs" folder
+- Predicted tissue masks and combined image will be saved into the "Outputs" folder (.tif format)
 
 ## Acknowledgements
 1: Mills, J. C., & Sansom, O. J. (2015). Reserve stem cells: Differentiated cells reprogram to fuel repair, metaplasia, and neoplasia in the adult gastrointestinal tract. Science Signaling, 8(385). doi: 10.1126/scisignal.aaa7540
