@@ -26,7 +26,7 @@ This pipeline uses a stack of already trained UNet models [1] to predict tissue 
 - PIL
 - OpenCV
 - skimage
-- tiffile
+- tifffile
 
 ## Using the Pipeline
 - Copy H&E Images of mouse pancereas with developing cancer into the "Inputs" folder.
