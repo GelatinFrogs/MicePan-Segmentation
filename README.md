@@ -3,7 +3,7 @@ This is an image analysis pipeline that takes input H&E images of a mouse pancre
 
 <p align='center'>
   <img src='assets/ADMProgression.jpg' width='450'/>
-  (Mills & Sansom, 2015)
+  <font size="1"> (Mills & Sansom, 2015)</font> 
 </p> 
 
 <p align='center'>
