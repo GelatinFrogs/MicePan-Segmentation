@@ -2,6 +2,11 @@
 This is an image analysis pipeline that takes input H&E images of a mouse pancreas and determines the location and abundance of tissue types common in developing pancreatic cancer. The predicted tissues can both replicate immunostaining techniques, and can even discern morphologies that are inseperable with current stains.
 
 <p align='center'>
+  <img src='assets/ADMProgression.png' width='420'/>
+</p>
+(Mills & Sansom, 2015)
+
+<p align='center'>
   <img src='assets/StainComparison.png' width='290'/>
   <img src='assets/FullMorphologyPrediction.png' width='420'/>
 </p>
