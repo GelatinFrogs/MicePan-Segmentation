@@ -2,13 +2,16 @@
 This is an image analysis pipeline that takes input H&E images of a mouse pancreas and determines the location and abundance of tissue types common in developing pancreatic cancer. The predicted tissues can both replicate immunostaining techniques, and can even discern morphologies that are inseperable with current stains.
 
 <p align='center'>
+  <img src='assets/StainComparison.png' width='290'/>
   <img src='assets/FullMorphologyPrediction.png' width='290'/>
 </p>
 
 ## Method
 This pipeline uses a stack of already trained UNet models [1] to predict tissue type based on morphology. Prior to UNet analysis, the H&E Images are locally normalized at intermediate crops using the Reinhard method [2]. Predictions for neoplasias, metaplasias, normal acinars, and stromal tissues are then combined to produce comprehensive results for an entire tissue.
 
-Insert Diagram Here
+<p align='center'>
+  <img src='assets/MorphologyWorkflow.png' width='290'/>
+</p>
 
 ## Prerequisites
 - Linux or macOS
