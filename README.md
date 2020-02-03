@@ -21,22 +21,19 @@ This pipeline uses a stack of already trained UNet models [2] to predict tissue 
 ## Prerequisites
 - Linux or macOS
 - NVIDIA GPU (memory suitable for image size) + CUDA cuDNN
-- Tested on Python 3.7.3
+- Tested on Python 3.7.6
 
-## Necessary Packages
-Tested using the following package versions:
-- keras v. 2.2.4
-- tensorflow v. 1.13.1
-- staintools v. 2.1.2
-- numpy v. 1.16.4
-- Pillow v. 5.4.1
-- OpenCV v. 4.1.0
-- scikit-image v. 0.15.0
-- tifffile v. 2019.7.26
+## Set up
+- Install miniconda (tested with conda 4.7.12)
+- Set up environment from .yaml file provided
+```bash
+conda env create -f MicePan.yml
+```
+- Copy H&E images of mouse pancereas with developing cancer into the "Inputs" folder (.tif format)
 
 ## Using the Pipeline
-- Copy H&E images of mouse pancereas with developing cancer into the "Inputs" folder (.tif format)
-- From the command line, run the python script
+- Navigate on the console to the folder containing this repository
+- From the command line, run the python script provided:
 ```bash
 python ProcessImages.py
 ```
