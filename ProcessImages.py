@@ -42,8 +42,8 @@ def dice_coef(y_true, y_pred):
 #Editable Parameters
 SliceLength=5000
 
-file_location='./GithubTestInputsFolder/*.tif'
-save_location='./GithubTestOutputsFolder/'
+file_location='./Inputs/*.tif'
+save_location='./Outputs/'
 NeoplasiaThreshold=.7  #Threshold optimized on prior data
 MetaplasiaThreshold=.5 #Threshold optimized on prior data
 NormalThreshold=.3     #Threshold optimized on prior data
