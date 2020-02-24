@@ -1,5 +1,5 @@
 #Import Packages and Functions
-print('\033[1mImporting More Packages Than Necessary\033[0m')
+print('\033[1mImporting Way More Packages Than Necessary\033[0m')
 import os
 import sys
 import numpy as np
@@ -42,6 +42,7 @@ def dice_coef(y_true, y_pred):
 #Editable Parameters
 SliceLength=5000
 
+#file_location='./PancreatitisInputs/*.tif'
 file_location='./Inputs/*.tif'
 save_location='./Outputs/'
 NeoplasiaThreshold=.7  #Threshold optimized on prior data
@@ -149,6 +150,7 @@ class ReinhardColorNormalizer(object):
 #Collecting Files to run
 print('\033[1mCollecting Files To Analyze\033[0m')
 test_ids=sorted(glob.glob(file_location))
+print(test_ids)
 print('\033[1mCollected '+str(len(test_ids))+' file(s)\033[0m')
 #End File Collection
 
@@ -178,13 +180,14 @@ for file in test_ids:
     
     p+=1
     FullImage=np.asarray(imread(file))
+    FullImage=np.pad(FullImage,((0,5000),(0,5000),(0,0)),'constant',constant_values=((255,255),(255,255),(255,255)))
     name=file.split('/')[-1]
     col, row,ch= FullImage.shape
     MeanTimesMat=np.zeros((col,row))
     NewImgADM= np.zeros((col,row))
     NewImgDuc= np.zeros((col,row))
     NewImgNorm =np.zeros((col,row))
-    l=len(range(SliceLength,row-(SliceLength-1),int(SliceLength)))
+    l=len(range(SliceLength,row-(SliceLength-1),int(SliceLength/2)))
     
     # setup progressbar
     print('\033[1mRunning Image: ' +str(p)+'/'+str(len(test_ids))+'\033[0m' )
@@ -193,10 +196,10 @@ for file in test_ids:
     sys.stdout.write("\b" * (20+1)) 
     progress=0
                   
-    for n,a in enumerate(list(range(SliceLength,row-(SliceLength-1),int(SliceLength)))):
+    for n,a in enumerate(list(range(SliceLength,row-(SliceLength-1),int(SliceLength/2)))):
         #Loop through rows of image making intermediate crops
         
-        for b in range(SliceLength,col-(SliceLength-1),int(SliceLength)):
+        for b in range(SliceLength,col-(SliceLength-1),int(SliceLength/2)):
             #Loop through columns of image making intermediate crops
             
             #Read and Normalize Intermediate Crop
@@ -262,16 +265,16 @@ for file in test_ids:
     del(NewSliceNorm)
         
     #Construct Predicted Masks
-    AvgImgADM=(NewImgADM+.000001)/(MeanTimesMat+.000001)
+    AvgImgADM=(NewImgADM)/(MeanTimesMat)
     MetaplasiaMask=AvgImgADM>=.5 #Threshold variable chosen from prior optimization
     
-    AvgImgDuc=(NewImgDuc+.000001)/(MeanTimesMat+.000001)
+    AvgImgDuc=(NewImgDuc)/(MeanTimesMat)
     NeoplasiaMask=AvgImgDuc>=.7 #Threshold variable chosen from prior optimization
     
-    AvgImgNorm=(NewImgNorm+.000001)/(MeanTimesMat+.000001)
+    AvgImgNorm=(NewImgNorm)/(MeanTimesMat)
     NormMask=AvgImgNorm>=.3 #Threshold variable chosen from prior optimization
     
-    #Delete old variable to make room in memory
+    #Delete old variables to make room in memory
     del(MeanTimesMat)
     del(AvgImgADM)
     del(AvgImgDuc)
@@ -286,11 +289,6 @@ for file in test_ids:
     del(mask2)
     del(mask3)
     stromal=mask==False
-
-    #Combine Masks
-    NeoplasiaMask[MetaplasiaMask==1]=0
-    NeoplasiaMask[NormMask==1]=0
-    MetaplasiaMask[NormMask==1]=0
     
     #Remove white space predictions
     NeoplasiaMask[mask]=0
@@ -298,6 +296,19 @@ for file in test_ids:
     NormMask[mask]=0
     del(mask)
     
+    #Remove Padding
+    FullImage=FullImage[0:-5000,0:-5000]
+    stromal=stromal[0:-5000,0:-5000]
+    NeoplasiaMask=NeoplasiaMask[0:-5000,0:-5000]
+    MetaplasiaMask=MetaplasiaMask[0:-5000,0:-5000]
+    NormMask=NormMask[0:-5000,0:-5000]
+    
+    #Combine Masks
+    NeoplasiaMask[MetaplasiaMask==1]=0
+    NeoplasiaMask[NormMask==1]=0
+    MetaplasiaMask[NormMask==1]=0
+    
+
     #Combine Masks
     stromal[NeoplasiaMask==1]=False
     stromal[MetaplasiaMask==1]=False
@@ -306,22 +317,11 @@ for file in test_ids:
     
     #Create Ouput Image
     AdjustedImage=np.zeros(np.shape(FullImage))
+    AdjustedImage[NeoplasiaMask==1,:]= [230,210,30]
+    AdjustedImage[MetaplasiaMask==1,:]=[222,31,123]
+    AdjustedImage[NormMask==1,:]=[122,230,213]
+    AdjustedImage[stromal,:]=[19,16,163]
 
-    AdjustedImage[NeoplasiaMask==1,0]=230
-    AdjustedImage[NeoplasiaMask==1,1]=210
-    AdjustedImage[NeoplasiaMask==1,2]=30
-
-    AdjustedImage[MetaplasiaMask==1,0]=222
-    AdjustedImage[MetaplasiaMask==1,1]=31
-    AdjustedImage[MetaplasiaMask==1,2]=123
-
-    AdjustedImage[NormMask==1,0]=122
-    AdjustedImage[NormMask==1,1]=230
-    AdjustedImage[NormMask==1,2]=213
-    
-    AdjustedImage[stromal,0]=19
-    AdjustedImage[stromal,1]=16
-    AdjustedImage[stromal,2]=163
     
     #Save Prediction Masks
     imsave(save_location+'Predicted-Metaplasia-'+name,np.squeeze(MetaplasiaMask.astype('uint8')), compress=6,  bigtiff=True)
@@ -339,13 +339,3 @@ for file in test_ids:
             
 print('Done')
 #End Analysis Pipeline
-
-
-
-
-
-
-
-
-
-
