@@ -29,6 +29,7 @@ This pipeline uses a stack of already trained UNet models [2] to predict tissue 
 ```bash
 conda env create -f MicePan.yml
 ```
+- Get Normalization Target from following location: https://drive.google.com/drive/folders/1ipgkjPawkuoLqtLENjHvSVC7hcZKWbRJ?usp=sharing
 - Copy H&E images of mouse pancereas with developing cancer into the "Inputs" folder (.tif format)
 
 ## Using the Pipeline
