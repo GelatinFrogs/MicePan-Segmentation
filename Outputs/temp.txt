@@ -1,1 +1,8 @@
-temporary file
+Output predictions will be deposited here:
+
+you will receive:
+- Normal Acinar Segmentation Mask
+- Metaplasia Segmentation Mask
+- Neoplasia Segmentation Mask
+- Other Tissue Segmentation Mask
+- A composite Image will all segmentations (cyan=normal, pink=meta, yellow=neo, blue=other)
