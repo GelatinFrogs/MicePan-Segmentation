@@ -1,1 +1,2 @@
-Need to upload "Normalization Target Image, but files size too large"
+Normalization Target Image is too large to be on Github, please find the image at the following location:
+https://drive.google.com/drive/folders/1ipgkjPawkuoLqtLENjHvSVC7hcZKWbRJ?usp=sharing
