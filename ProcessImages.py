@@ -43,11 +43,12 @@ def dice_coef(y_true, y_pred):
 SliceLength=5000
 
 #file_location='./PancreatitisInputs/*.tif'
-file_location='./Inputs/*.tif'
-save_location='./Outputs/'
+file_location='/home/users/terneslu/RDS/terneslu/PROJECTS/ThirdMicePan/NewBigTiffs/*.tif'
+save_location='/home/users/terneslu/RDS/terneslu/PROJECTS/ThirdMicePan/NewBigTiffs-Outputs/'
 NeoplasiaThreshold=.7  #Threshold optimized on prior data
 MetaplasiaThreshold=.5 #Threshold optimized on prior data
 NormalThreshold=.3     #Threshold optimized on prior data
+acc_var= .5 #accuracy variable (0-1)   --controls overlap of intermittent croping and normalization higher values have less edge effects, but take longer to compute
 
 #Non-editable Parameters
 SquareTileLength=512 
@@ -149,7 +150,9 @@ class ReinhardColorNormalizer(object):
 
 #Collecting Files to run
 print('\033[1mCollecting Files To Analyze\033[0m')
+#test_ids=sorted(glob.glob(file_location))
 test_ids=sorted(glob.glob(file_location))
+#test_ids.extend(glob.glob('/home/users/terneslu/RDS/terneslu/PROJECTS/ThirdMicePan/SyntheticROIs/*Adjustment-7.tif'))
 print(test_ids)
 print('\033[1mCollected '+str(len(test_ids))+' file(s)\033[0m')
 #End File Collection
@@ -163,7 +166,8 @@ normalizer = ReinhardColorNormalizer()
 mask1=target[:,:,0]<=200
 mask2=target[:,:,1]<=200
 mask3=target[:,:,2]<=200
-mask=(mask1+mask2+mask3)
+#mask=(mask1.astype('int')+mask2.astype('int')+mask3.astype('int'))==3
+mask=mask1+mask2+mask3
 normalizer.fit(target,mask)
 #End Fit Normalizer
 
@@ -187,7 +191,7 @@ for file in test_ids:
     NewImgADM= np.zeros((col,row))
     NewImgDuc= np.zeros((col,row))
     NewImgNorm =np.zeros((col,row))
-    l=len(range(SliceLength,row-(SliceLength-1),int(SliceLength/2)))
+    l=len(range(SliceLength,row-(SliceLength-1),int(SliceLength/(1+acc_var))))
     
     # setup progressbar
     print('\033[1mRunning Image: ' +str(p)+'/'+str(len(test_ids))+'\033[0m' )
@@ -196,10 +200,10 @@ for file in test_ids:
     sys.stdout.write("\b" * (20+1)) 
     progress=0
                   
-    for n,a in enumerate(list(range(SliceLength,row-(SliceLength-1),int(SliceLength/2)))):
+    for n,a in enumerate(list(range(SliceLength,row-(SliceLength-1),int(SliceLength/(1+acc_var))))):
         #Loop through rows of image making intermediate crops
         
-        for b in range(SliceLength,col-(SliceLength-1),int(SliceLength/2)):
+        for b in range(SliceLength,col-(SliceLength-1),int(SliceLength/(1+acc_var))):
             #Loop through columns of image making intermediate crops
             
             #Read and Normalize Intermediate Crop
@@ -207,7 +211,8 @@ for file in test_ids:
             mask1=image[:,:,0]<=200
             mask2=image[:,:,1]<=200
             mask3=image[:,:,2]<=200
-            mask=(mask1+mask2+mask3)
+            #mask=(mask1.astype('int')+mask2.astype('int')+mask3.astype('int'))==3
+            mask=mask1+mask2+mask3
             to_transform = staintools.LuminosityStandardizer.standardize(image)
             transformed = normalizer.transform(to_transform,mask)
             transformed[~mask]=image[~mask]
@@ -284,7 +289,7 @@ for file in test_ids:
     mask1=FullImage[:,:,0]>=200
     mask2=FullImage[:,:,1]>=200
     mask3=FullImage[:,:,2]>=200
-    mask=mask1+mask2+mask3
+    mask=(mask1.astype('int')+mask2.astype('int')+mask3.astype('int'))==3
     del(mask1)
     del(mask2)
     del(mask3)
@@ -339,3 +344,4 @@ for file in test_ids:
             
 print('Done')
 #End Analysis Pipeline
+
